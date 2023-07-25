@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}"
+>
+<head>
+  <title>Lista de filmes</title>
+</head>
+<body>
+<div layout:fragment="conteudo">
+  <h1>Lista de clientes</h1>
+  <a href="/clientes/formulario">Novo</a>
+
+  <form method="get" action="/clientes">
+    <div>
+    <input id="nome" name="nome" required placeholder="Nome do cliente">
+    </div>
+    <input type="submit" value="Buscar">
+  </form>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Contato</th>
+      <th>Tipo</th>
+      <th>Data de Cadastro</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente : ${listaClientes}">
+      <td th:text="${cliente.nome}"></td>
+      <td th:text="${cliente.contato.texto}"></td>
+      <td th:text="${cliente.contato.tipo}"></td>
+      <td th:text="${cliente.dataCadastro}"></td>
+      <td>
+        <a th:href="@{/clientes/formulario?id={id}(id=${cliente.id})}">Editar</a>
+
+        <form action="/clientes" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="id" th:value="${cliente.id}">
+          <input type="submit" value="Excluir">
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

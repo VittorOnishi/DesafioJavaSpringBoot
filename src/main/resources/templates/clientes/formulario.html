@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+<head>
+  <title>Cadastro de clientes</title>
+</head>
+<body>
+<div layout:fragment="conteudo">
+  <h1>Cadastro de clientes</h1>
+  <a href="/clientes">Listagem</a>
+  <form method="post" action="/clientes">
+
+    <input type="hidden" name="_method" value="put" th:if="${cliente != null and cliente.contato != null}">
+    <input type="hidden" name="id" th:value="${cliente?.id}">
+
+
+    <div>
+      <label for="nome">Nome:</label>
+      <input id="nome" name="nome" th:value="${cliente?.nome}" required>
+    </div>
+
+    <div>
+      <label for="texto">Contato:</label>
+      <input id="texto" name="texto" th:value="${cliente?.contato?.texto}" required>
+    </div>
+
+    <div>
+      <label for="tipo">Tipo do contato:</label>
+      <select id="tipo" name="tipo" required>
+        <option value="" disabled selected>Selecione</option>
+        <option value="Telefone" th:selected="${cliente?.contato?.tipo == 'Telefone'}">Telefone</option>
+        <option value="Email" th:selected="${cliente?.contato?.tipo == 'Email'}">Email</option>
+        <option value="Outro" th:selected="${cliente?.contato?.tipo == 'Outro'}">Outro</option>
+      </select>
+    </div>
+
+
+    <input type="submit" value="Cadastrar">
+  </form>
+</div>
+</body>
+</html>
